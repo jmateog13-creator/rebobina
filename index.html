@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0e0b1f">
+<title>Rebobina · Tutoria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800;900&family=Atkinson+Hyperlegible:wght@400;700&family=VT323&display=swap">
+<style>
+:root{
+  --fons:#0e0b1f; --placa:#1b1636; --placa2:#262049; --linia:#352d63;
+  --tinta:#f7f4ff; --suau:#b5acd9; --fosc:#0e0b1f;
+  --g1:#ff3d81; --g2:#ffb03b;
+  --display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
+  --text:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --osd:"VT323",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--fons);color:var(--tinta);font:400 19px/1.5 var(--text)}
+button,input{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:800;margin:0;line-height:1.02;text-wrap:balance;letter-spacing:-.02em}
+p{margin:0}
+:focus-visible{outline:3px solid var(--g2);outline-offset:3px}
+.vista{min-height:100%;max-width:1320px;margin:0 auto;padding:28px clamp(16px,3vw,40px) 40px;display:flex;flex-direction:column;gap:28px}
+.eyebrow{font-weight:700;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--suau)}
+.osd{font-family:var(--osd);font-size:28px;letter-spacing:.06em;color:var(--tinta)}
+.logo{font:900 30px var(--display);letter-spacing:-.03em}
+.logo span{background:linear-gradient(90deg,var(--g1),var(--g2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{border:0;border-radius:14px;padding:13px 22px;font-weight:700;font-size:18px;background:var(--placa2);color:var(--tinta);cursor:pointer;transition:transform .05s,background .15s}
+.btn:hover{background:#322a5c}
+.btn:active{transform:translateY(2px)}
+.btn.primari{background:linear-gradient(90deg,var(--g1),var(--g2));color:var(--fosc)}
+.btn.gran{font-size:22px;padding:16px 28px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.tecla{font-size:13px;opacity:.75;margin-left:8px;border:1px solid currentColor;border-radius:6px;padding:0 6px}
+.centre{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px}
+.centre p{color:var(--suau);max-width:52ch}
+.centre a{color:var(--g2);font-weight:700}
+
+/* inici */
+.capcal h1{font-size:clamp(44px,7vw,92px)}
+.capcal p{color:var(--suau);max-width:62ch;margin-top:12px}
+.camp{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.camp label{font-weight:700}
+.camp input{background:var(--placa);border:2px solid var(--linia);border-radius:12px;padding:10px 14px;font:800 22px var(--display);width:9ch;text-align:center}
+.llista{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.pcard{display:grid;grid-template-columns:auto 1fr;gap:14px;text-align:left;background:var(--placa);border:2px solid var(--linia);border-radius:16px;padding:16px;cursor:pointer;transition:opacity .15s,border-color .15s}
+.pcard[aria-pressed="false"]{opacity:.45}
+.pcard[aria-pressed="true"]{border-color:var(--g1)}
+.pcard .check{width:24px;height:24px;border-radius:7px;border:2px solid var(--suau);display:grid;place-items:center;font-weight:800;color:var(--fosc)}
+.pcard[aria-pressed="true"] .check{background:var(--g1);border-color:var(--g1)}
+.pcard .meta{font-size:14px;color:var(--suau)}
+.barra-accions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;position:sticky;bottom:0;padding-block:14px;background:linear-gradient(transparent,var(--fons) 30%)}
+
+/* sala */
+.sala{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:40px;align-items:center;background:var(--placa);border-radius:28px;padding:clamp(24px,4vw,48px)}
+@media (max-width:820px){.sala{grid-template-columns:1fr}}
+.sala .url{font:800 clamp(22px,3vw,34px) var(--display);color:var(--g2);word-break:break-all}
+.sala .codi{font:900 clamp(72px,9vw,130px)/1 var(--display);letter-spacing:.04em}
+.qr{background:#fff;padding:14px;border-radius:18px;line-height:0;justify-self:start;width:max-content}
+.progres{display:flex;flex-direction:column;gap:10px}
+.progres .nums{font:800 clamp(28px,3vw,40px) var(--display)}
+.progres .nums small{font:700 18px var(--text);color:var(--suau);margin-left:8px}
+.pista{height:16px;border-radius:99px;background:var(--placa);overflow:hidden}
+.pista i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--g1),var(--g2));border-radius:99px;transition:width .5s}
+.anonim{background:var(--placa2);border-radius:16px;padding:14px 18px;color:var(--suau);max-width:72ch}
+.anonim b{color:var(--tinta)}
+.comandament{margin-top:auto;display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+
+/* show */
+#v-show{position:fixed;inset:0;max-width:none;padding:0;display:block;overflow:hidden}
+.diapo{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,2vw,26px);padding:clamp(28px,6vw,96px);
+  background:radial-gradient(120% 90% at 100% 0%,color-mix(in srgb,var(--g1) 55%,transparent),transparent 60%),radial-gradient(100% 90% at 0% 100%,color-mix(in srgb,var(--g2) 45%,transparent),transparent 60%),var(--fons)}
+.diapo::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,#ffffff08 0 2px,transparent 2px 4px);mix-blend-mode:overlay}
+.diapo .cap{position:absolute;top:24px;left:clamp(28px,6vw,96px);right:clamp(28px,6vw,96px);display:flex;justify-content:space-between;align-items:center}
+.diapo .peu{position:absolute;bottom:22px;left:clamp(28px,6vw,96px);right:clamp(28px,6vw,96px);display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--suau)}
+.frase{font:700 clamp(24px,2.8vw,40px)/1.2 var(--text);max-width:30ch}
+.gran{font:900 clamp(64px,11vw,170px)/.95 var(--display);letter-spacing:-.04em}
+.gran.text{font-size:clamp(48px,7.5vw,120px)}
+.extra{font:700 clamp(18px,1.7vw,24px)/1.35 var(--text);color:var(--tinta);opacity:.85;max-width:52ch}
+.segon{font:800 clamp(28px,3.4vw,52px)/1.1 var(--display)}
+.segon small{display:block;font:700 clamp(16px,1.6vw,22px) var(--text);opacity:.8;margin-top:6px}
+.barres{display:flex;flex-direction:column;gap:10px;max-width:980px}
+.b{display:grid;grid-template-columns:minmax(160px,30%) 1fr 4.2ch;gap:14px;align-items:center;font:700 clamp(16px,1.6vw,22px) var(--text)}
+.b .p{height:30px;border-radius:9px;background:#ffffff1a;overflow:hidden}
+.b .p i{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,var(--g1),var(--g2));transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.b.top .p i{box-shadow:0 0 24px color-mix(in srgb,var(--g2) 70%,transparent)}
+.b .n{font:800 clamp(18px,1.8vw,26px) var(--display);text-align:right;font-variant-numeric:tabular-nums}
+.hist{display:flex;align-items:flex-end;gap:6px;height:120px;max-width:720px}
+.hist div{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;font:700 13px var(--text);color:var(--suau)}
+.hist i{width:100%;height:0;border-radius:6px 6px 2px 2px;background:linear-gradient(0deg,var(--g1),var(--g2));transition:height 1s cubic-bezier(.2,.8,.2,1)}
+.preguntes{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;max-width:900px}
+.preguntes li{background:#ffffff14;border-radius:14px;padding:16px 20px;font:700 clamp(22px,2.2vw,32px)/1.3 var(--text)}
+.accions-final{display:flex;gap:12px;flex-wrap:wrap}
+.rew{animation:rew .42s steps(6) both}
+@keyframes rew{0%{filter:blur(6px) saturate(2);transform:skewX(-8deg) translateX(-3%)}60%{filter:blur(2px);transform:skewX(3deg)}100%{filter:none;transform:none}}
+.parpelleja{animation:parp 1s steps(2) infinite}
+@keyframes parp{50%{opacity:0}}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--tinta);color:var(--fosc);padding:10px 18px;border-radius:12px;font-weight:700;z-index:9}
+.demo{position:fixed;bottom:10px;left:10px;background:var(--g2);color:var(--fosc);font-weight:700;font-size:13px;padding:4px 10px;border-radius:8px;z-index:9}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="demo" id="demo" hidden>MODE DEMO · respostes simulades</div>
+
+
+<section class="vista" id="v-inici" hidden>
+  <div class="capcal">
+    <span class="eyebrow">Tutoria · El grup en dades</span>
+    <h1>Rebo<span style="background:linear-gradient(90deg,var(--g1),var(--g2));-webkit-background-clip:text;background-clip:text;color:transparent">bina</span></h1>
+    <p>Els alumnes contesten unes preguntes ràpides des del mòbil, de manera anònima. Després rebobineu: la classe es veu a si mateixa en dades, diapositiva a diapositiva. A la pantalla només surten mitjanes i percentatges.</p>
+  </div>
+  <div class="camp"><label for="classe">Nom del grup</label><input id="classe" value="3C" maxlength="12" autocomplete="off"></div>
+  <div class="llista" id="llista"></div>
+  <div class="barra-accions">
+    <span class="eyebrow" id="i-n"></span>
+    <button class="btn primari gran" id="i-obrir" type="button">Obrir la sala</button>
+  </div>
+</section>
+
+<section class="vista" id="v-sala" hidden>
+  <span class="logo">Rebo<span>bina</span></span>
+  <div class="sala">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <p style="color:var(--suau)">Entra des del mòbil a</p>
+      <b class="url" id="s-url"></b>
+      <p style="color:var(--suau);margin-top:10px">i posa el codi</p>
+      <div class="codi" id="s-codi">····</div>
+    </div>
+    <div class="qr" id="s-qr" aria-label="Codi QR per entrar"></div>
+  </div>
+  <div class="progres">
+    <span class="nums" id="s-resp">0 han respost<small>0 a dins</small></span>
+    <div class="pista"><i id="s-barra"></i></div>
+  </div>
+  <p class="anonim"><b>Les respostes són anònimes.</b> No es guarda res: quan tanquis la sala, desapareixen. A la pantalla només surten mitjanes i percentatges, i cap opció amb menys de 3 vots es destaca.</p>
+  <div class="comandament">
+    <button class="btn" id="s-tornar" type="button">← Tornar</button>
+    <button class="btn primari gran" id="s-rebobinar" type="button" disabled>◀◀ Rebobinar</button>
+  </div>
+</section>
+
+<section class="vista" id="v-show" hidden aria-live="polite"></section>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script type="module">
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const VISTES = ['#v-inici', '#v-sala', '#v-show'];
+const mostrar = id => VISTES.forEach(v => $(v).hidden = v !== id);
+let toastT;
+const toast = (m, ms = 2400) => { const t = $('#toast'); t.textContent = m; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, ms); };
+
+const DEMO = new URLSearchParams(location.search).has('demo');
+const N = DEMO ? null : await import('./sala.js');
+const MOVIL_URL = location.origin + location.pathname.replace(/[^/]*$/, '') + 'movil.html';
+const MIN_DESTACAR = 3;   // una opció amb menys vots no es destaca mai: ningú no ha de quedar identificat
+const PALETES = [['#ff3d81', '#ffb03b'], ['#3b82f6', '#22d3ee'], ['#8b5cf6', '#ec4899'], ['#10b981', '#facc15'], ['#f43f5e', '#8b5cf6'], ['#06b6d4', '#a3e635']];
+
+let BANC = [], actives = new Set(), yo = null, sala = null;
+
+async function soyProfe() { yo = { id: DEMO ? 'demo-profe' : N.elMeuId() }; return true; }
+
+/* ================= inici ================= */
+function pintarLlista() {
+  $('#llista').innerHTML = BANC.map(p => `<button class="pcard" type="button" data-id="${p.id}" aria-pressed="${actives.has(p.id)}">
+    <span class="check" aria-hidden="true">${actives.has(p.id) ? '✓' : ''}</span>
+    <span><b>${esc(p.text)}</b><div class="meta">${p.tipus === 'num' ? `De ${p.min} a ${p.max} ${p.unitat}` : p.opcions.length + ' opcions'}</div></span></button>`).join('');
+  const n = actives.size;
+  $('#i-n').textContent = `${n} ${n === 1 ? 'pregunta' : 'preguntes'} · uns ${Math.max(1, Math.round(n * 0.3))} min per contestar`;
+  $('#i-obrir').disabled = !n;
+}
+$('#llista').addEventListener('click', e => {
+  const b = e.target.closest('[data-id]'); if (!b) return;
+  const id = b.dataset.id; actives.has(id) ? actives.delete(id) : actives.add(id); pintarLlista();
+});
+$('#i-obrir').onclick = () => obrirSala();
+
+/* ================= sala =================
+ * La pissarra és l'única font de veritat. Respostes en memòria: uid → {id: valor}. */
+const classe = () => ($('#classe').value.trim() || 'la classe');
+const preguntes = () => BANC.filter(p => actives.has(p.id));
+const dins = () => [...sala.jugadors].filter(u => sala.presents.has(u)).length;
+
+function obrirSala() {
+  tancarSala();
+  sala = { codi: DEMO ? '0000' : N.nouCodi(), canal: null, fase: 'obert', jugadors: new Set(), presents: new Set(), rebutjats: new Set(), respostes: new Map(), i: 0, diapos: [] };
+  if (DEMO) iniciaDemo();
+  else sala.canal = N.connecta({ codi: sala.codi, uid: yo.id, prefix: 'tut-rebobina-', onMissatge: alMissatge, onPresencia: alPresencia,
+    onEstat: st => { if (st === 'error') toast('Connexió inestable… reintentant', 3000); } });
+  sala.enllac = `${MOVIL_URL}?c=${sala.codi}`;
+  $('#s-url').textContent = MOVIL_URL.replace(/^https?:\/\//, '');
+  $('#s-codi').textContent = sala.codi;
+  const qr = $('#s-qr'); qr.innerHTML = '';
+  if (window.QRCode) { new QRCode(qr, { text: sala.enllac, width: 240, height: 240, correctLevel: QRCode.CorrectLevel.M }); qr.hidden = false; } else qr.hidden = true;
+  pintarSala(); mostrar('#v-sala'); difondre(true);
+}
+function tancarSala() {
+  if (!sala) return;
+  difondre(true, 'cerrada');
+  clearInterval(sala.demoT);
+  setTimeout(((c) => () => c?.surt())(sala.canal), 300);
+  sala = null;
+}
+window.addEventListener('beforeunload', () => { if (sala?.canal) sala.canal.envia('estat', { s: { fase: 'cerrada' } }); });
+
+function alPresencia(uids) {
+  if (!sala) return;
+  sala.presents = new Set(uids);
+  uids.forEach(u => { if (u !== yo.id) sala.jugadors.add(u); });   // sala anònima: entra qui té el codi
+  canvi();
+}
+/* valida cada resposta contra la pregunta: el mòbil no és de fiar */
+function neteja(a) {
+  const net = {};
+  for (const p of preguntes()) {
+    const v = a?.[p.id];
+    if (p.tipus === 'num' && typeof v === 'number' && v >= p.min && v <= p.max) net[p.id] = Math.round(v / p.pas) * p.pas;
+    if (p.tipus === 'opcio' && Number.isInteger(v) && v >= 0 && v < p.opcions.length) net[p.id] = v;
+  }
+  return net;
+}
+function alMissatge(m) {
+  if (!sala) return;
+  if (m.type === 'hola') { if (sala.rebutjats.has(m.from)) sala.canal.envia('fora', { uid: m.from }); else difondre(true); return; }
+  if (m.type !== 'respostes' || !sala.jugadors.has(m.from) || sala.fase !== 'obert') return;
+  sala.respostes.set(m.from, neteja(m.a));   // si torna a enviar, se sobreescriu
+  sala.canal.envia('ack', { uid: m.from });
+  canvi();
+}
+let difT = null;
+function difondre(ara = false, forca = null) {
+  if (!sala?.canal) return;
+  if (!ara) { if (!difT) difT = setTimeout(() => { difT = null; difondre(true); }, 250); return; }
+  clearTimeout(difT); difT = null;
+  sala.canal.envia('estat', { s: { fase: forca || sala.fase, classe: classe(), ids: [...actives], n: dins(), resp: sala.respostes.size } });
+}
+function canvi() { if (sala?.fase === 'obert') pintarSala(); difondre(); }
+function pintarSala() {
+  const r = sala.respostes.size, n = Math.max(dins(), r);
+  $('#s-resp').innerHTML = `${r} ${r === 1 ? 'ha respost' : 'han respost'}<small>${n} a dins</small>`;
+  $('#s-barra').style.width = (n ? r / n * 100 : 0) + '%';
+  $('#s-rebobinar').disabled = !r;
+}
+
+/* ================= càlculs ================= */
+const valors = id => [...sala.respostes.values()].map(a => a[id]).filter(v => v != null);
+const hm = h => { const t = Math.round(h * 60), H = Math.floor(t / 60), M = t % 60; return M ? `${H} h ${M} min` : `${H} h`; };
+const fraseDe = p => esc(p.diapo.frase.replace('{classe}', classe()));
+
+function diapoNum(p) {
+  const v = valors(p.id); if (!v.length) return null;
+  const mitj = v.reduce((a, b) => a + b, 0) / v.length;
+  const bins = []; for (let x = Math.floor(p.min); x <= Math.floor(p.max); x++) bins.push({ x, n: v.filter(y => Math.floor(y) === x).length });
+  const maxb = Math.max(...bins.map(b => b.n)) || 1;
+  let segon = '';
+  if (p.diapo.setmana) {
+    const tot = Math.round(v.reduce((a, b) => a + b, 0) * 7);
+    segon = `<p class="segon">Entre tots: ${tot.toLocaleString('ca')} h a la setmana<small>És a dir, ${(tot / 24).toLocaleString('ca', { maximumFractionDigits: 1 })} dies sencers</small></p>`;
+  }
+  return `<p class="frase">${fraseDe(p)}</p>
+    <p class="gran" data-hm="${mitj}">${hm(mitj)}</p>
+    ${segon}
+    <div class="hist" aria-label="Distribució">${bins.map(b => `<div><i data-h="${b.n / maxb * 100}"></i>${b.x}</div>`).join('')}</div>
+    ${p.diapo.extra ? `<p class="extra">${esc(p.diapo.extra)}</p>` : ''}`;
+}
+function diapoOpcio(p) {
+  const v = valors(p.id); if (!v.length) return null;
+  const c = p.opcions.map((_, k) => v.filter(x => x === k).length), tot = v.length;
+  const max = Math.max(...c), k = c.indexOf(max), empat = c.filter(x => x === max).length > 1;
+  const destaca = max >= MIN_DESTACAR && !empat;
+  return `<p class="frase">${fraseDe(p)}</p>
+    <p class="gran text">${destaca ? esc(p.opcions[k]) : 'Opinions repartides'}</p>
+    <div class="barres">${p.opcions.map((o, j) => `<div class="b${destaca && j === k ? ' top' : ''}"><span>${esc(o)}</span><span class="p"><i data-w="${c[j] / tot * 100}"></i></span><span class="n">${Math.round(c[j] / tot * 100)}%</span></div>`).join('')}</div>
+    ${p.diapo.extra ? `<p class="extra">${esc(p.diapo.extra)}</p>` : ''}`;
+}
+function construeixDiapos() {
+  const r = sala.respostes.size;
+  const ds = [`<span class="osd parpelleja">◀◀ REBOBINANT</span>
+    <p class="gran">${esc(classe())}</p>
+    <p class="frase">El primer tram del curs, en ${preguntes().length} dades.</p>
+    <p class="extra">${r} ${r === 1 ? 'persona ha' : 'persones han'} respost. Tot és anònim.</p>`];
+  for (const p of preguntes()) { const h = p.tipus === 'num' ? diapoNum(p) : diapoOpcio(p); if (h) ds.push(h); }
+  ds.push(`<span class="osd">■ FI DE LA CINTA</span>
+    <h2 class="gran text">I ara, què?</h2>
+    <ul class="preguntes"><li>Quina dada us ha sorprès més?</li><li>N'hi ha alguna que us preocupi?</li><li>Què canviaríeu, com a grup, d'aquí a final de trimestre?</li></ul>
+    <div class="accions-final"><button class="btn" type="button" data-accio="csv">Descarregar resum (CSV)</button><button class="btn" type="button" data-accio="tancar">Tancar la sala</button></div>`);
+  return ds;
+}
+
+/* ================= show ================= */
+function rebobinar() {
+  sala.fase = 'show'; sala.diapos = construeixDiapos(); sala.i = 0;
+  difondre(true); mostrar('#v-show'); pintarDiapo();
+  document.documentElement.requestFullscreen?.().catch(() => {});
+}
+function pintarDiapo() {
+  const i = sala.i, total = sala.diapos.length, [g1, g2] = PALETES[i % PALETES.length];
+  const t = String(Math.floor(i / 60)).padStart(2, '0') + ':' + String(i % 60).padStart(2, '0');
+  $('#v-show').innerHTML = `<article class="diapo rew" style="--g1:${g1};--g2:${g2}">
+      <div class="cap"><span class="osd">▶ PLAY</span><span class="osd">${t} / ${String(total - 1).padStart(2, '0')}</span></div>
+      ${sala.diapos[i]}
+      <div class="peu"><span>${i ? '← Enrere' : ''}</span><span>${i < total - 1 ? 'Espai: següent →' : ''}</span></div>
+    </article>`;
+  const d = $('#v-show .diapo');
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    d.querySelectorAll('i[data-w]').forEach(e => e.style.width = e.dataset.w + '%');
+    d.querySelectorAll('i[data-h]').forEach(e => e.style.height = e.dataset.h + '%');
+    const g = d.querySelector('[data-hm]'); if (g) compta(g, +g.dataset.hm);
+  }));
+}
+function compta(el, fins) {   // el número corre fins a la mitjana
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const t0 = performance.now(), dur = 900;
+  const pas = t => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3); el.textContent = hm(fins * e); if (k < 1) requestAnimationFrame(pas); };
+  requestAnimationFrame(pas);
+}
+function mou(d) { if (!sala || sala.fase !== 'show') return; const j = sala.i + d; if (j < 0 || j >= sala.diapos.length) return; sala.i = j; pintarDiapo(); }
+document.addEventListener('keydown', e => {
+  if (e.target.closest?.('input')) return;
+  if (sala?.fase === 'show') {
+    if (e.code === 'Space' || e.key === 'ArrowRight') { e.preventDefault(); mou(1); }
+    if (e.key === 'ArrowLeft') mou(-1);
+  }
+});
+$('#v-show').addEventListener('click', e => {
+  const a = e.target.closest('[data-accio]');
+  if (!a) return mou(e.clientX < innerWidth / 3 ? -1 : 1);
+  if (a.dataset.accio === 'csv') return descarregaCSV();
+  if (a.dataset.accio === 'tancar') { document.exitFullscreen?.().catch(() => {}); tancarSala(); mostrar('#v-inici'); toast('Sala tancada. No s\'ha desat res.'); }
+});
+function descarregaCSV() {
+  const files = [['Pregunta', 'Resposta', 'Vots', 'Percentatge o mitjana']];
+  for (const p of preguntes()) {
+    const v = valors(p.id); if (!v.length) continue;
+    if (p.tipus === 'num') files.push([p.text, 'Mitjana', v.length, (v.reduce((a, b) => a + b, 0) / v.length).toFixed(2) + ' ' + p.unitat]);
+    else p.opcions.forEach((o, k) => { const n = v.filter(x => x === k).length; files.push([p.text, o, n, Math.round(n / v.length * 100) + '%']); });
+  }
+  const csv = '﻿' + files.map(f => f.map(c => `"${String(c).replace(/"/g, '""')}"`).join(';')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+  a.download = `rebobina-${classe().replace(/\W+/g, '')}-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+$('#s-rebobinar').onclick = rebobinar;
+$('#s-tornar').onclick = () => { tancarSala(); mostrar('#v-inici'); };
+
+/* ================= demo ================= */
+function iniciaDemo() {
+  $('#demo').hidden = false;
+  const uids = Array.from({ length: 24 }, (_, i) => 'alumne-' + i);
+  uids.forEach(u => { sala.jugadors.add(u); sala.presents.add(u); });
+  const pes = { app: [6, 5, 4, 3, 2, 1], estudi: [1, 5, 4, 2, 1], esport: [2, 4, 3, 1], arribar: [6, 3, 2, 1], nit: [1, 2, 4, 3, 3], estat: [1, 2, 3, 5, 3], agrada: [8, 2, 2, 3, 2, 1], costa: [4, 4, 3, 5, 1] };
+  const tria = w => { let r = Math.random() * w.reduce((a, b) => a + b, 0), k = 0; while ((r -= w[k]) > 0) k++; return k; };
+  let i = 0;
+  sala.demoT = setInterval(() => {
+    if (!sala || sala.fase !== 'obert' || i >= uids.length) return;
+    const a = {};
+    for (const p of preguntes()) {
+      if (p.tipus === 'num') a[p.id] = Math.min(p.max, Math.max(p.min, Math.round(((p.id === 'son' ? 7 : 4.5) + (Math.random() - .5) * 4) * 2) / 2));
+      else a[p.id] = tria(pes[p.id] || p.opcions.map(() => 1));
+    }
+    sala.respostes.set(uids[i++], neteja(a)); canvi();
+  }, 260);
+}
+
+/* ================= inici ================= */
+(async () => {
+  try { BANC = (await fetch('preguntes.json').then(r => r.json())).preguntes; }
+  catch { toast('No s\'han pogut carregar les preguntes', 5000); }
+  actives = new Set(BANC.map(p => p.id));
+  await soyProfe();
+  pintarLlista(); mostrar('#v-inici');
+})();
+</script>
+</body>
+</html>

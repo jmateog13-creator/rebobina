@@ -1,0 +1,81 @@
+{
+  "versio": 1,
+  "preguntes": [
+    {
+      "id": "son",
+      "tipus": "num",
+      "text": "Quantes hores dorms un dia que hi ha classe?",
+      "min": 4, "max": 11, "pas": 0.5, "inicial": 8, "unitat": "h",
+      "diapo": {
+        "frase": "De mitjana, {classe} dorm",
+        "extra": "Recomanat entre els 13 i els 18 anys: de 8 a 10 hores."
+      }
+    },
+    {
+      "id": "pantalla",
+      "tipus": "num",
+      "text": "Quant temps de pantalla vas fer ahir? Mira-ho al mòbil: Configuració › Temps d'ús.",
+      "min": 0, "max": 12, "pas": 0.5, "inicial": 4, "unitat": "h",
+      "diapo": {
+        "frase": "Cada dia, {classe} passa davant del mòbil",
+        "setmana": true
+      }
+    },
+    {
+      "id": "app",
+      "tipus": "opcio",
+      "text": "Quina app fas servir més?",
+      "opcions": ["TikTok", "Instagram", "WhatsApp", "YouTube", "Jocs", "Una altra"],
+      "diapo": { "frase": "L'app de {classe} és" }
+    },
+    {
+      "id": "estudi",
+      "tipus": "opcio",
+      "text": "Quanta estona estudies o fas deures un dia normal?",
+      "opcions": ["Gens", "Menys de 30 min", "De 30 min a 1 h", "D'1 a 2 h", "Més de 2 h"],
+      "diapo": { "frase": "Un dia normal, a {classe} el més habitual és estudiar" }
+    },
+    {
+      "id": "esport",
+      "tipus": "opcio",
+      "text": "Quants dies a la setmana fas esport (fora d'Educació Física)?",
+      "opcions": ["Cap", "1 o 2 dies", "3 o 4 dies", "5 o més"],
+      "diapo": { "frase": "Fora d'Educació Física, {classe} fa esport", "extra": "Es recomana una hora d'activitat física cada dia." }
+    },
+    {
+      "id": "arribar",
+      "tipus": "opcio",
+      "text": "Com arribes a l'institut?",
+      "opcions": ["A peu", "En bus", "En cotxe", "En bici o patinet"],
+      "diapo": { "frase": "La majoria de {classe} arriba" }
+    },
+    {
+      "id": "nit",
+      "tipus": "opcio",
+      "text": "A quina hora deixes el mòbil a la nit?",
+      "opcions": ["Abans de les 22 h", "De 22 a 23 h", "De 23 a 24 h", "Després de les 24 h", "Dormo amb el mòbil al llit"],
+      "diapo": { "frase": "A la nit, {classe} deixa el mòbil", "extra": "La llum de la pantalla retarda la son: l'ideal és deixar-lo una hora abans d'anar a dormir." }
+    },
+    {
+      "id": "estat",
+      "tipus": "opcio",
+      "text": "Com et sents a 3r, fins ara?",
+      "opcions": ["😣 Malament", "😕 Regular", "😐 Ni bé ni malament", "🙂 Bé", "😄 Molt bé"],
+      "diapo": { "frase": "Fins ara, {classe} se sent" }
+    },
+    {
+      "id": "agrada",
+      "tipus": "opcio",
+      "text": "Què és el que més t'agrada de l'institut?",
+      "opcions": ["Els amics", "Alguna assignatura", "Alguns profes", "El pati", "Les sortides", "Res"],
+      "diapo": { "frase": "El que més agrada a {classe} de l'institut és" }
+    },
+    {
+      "id": "costa",
+      "tipus": "opcio",
+      "text": "Què és el que més et costa?",
+      "opcions": ["Organitzar-me", "Concentrar-me", "Alguna assignatura", "Llevar-me al matí", "Res en especial"],
+      "diapo": { "frase": "El que més costa a {classe} és" }
+    }
+  ]
+}
